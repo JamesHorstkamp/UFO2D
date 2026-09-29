@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 
     public float speed = 20.0f;
     public int gold = 0;
+    public int wingold = 3;
     public TMP_Text winText;
     private Rigidbody2D rb2d;
     private Vector3 startingScale;
@@ -50,15 +51,17 @@ public class PlayerController : MonoBehaviour
 
         GameObject goldTextGO = GameObject.Find("Gold Text");
 
-        if (goldTextGO)
-        {
-            goldTextGO.GetComponent<TMP_Text>().text = gold.ToString();
-
-            if (winText)
+            if (goldTextGO)
             {
-                winText.enabled = true;
-                Time.timeScale = 0.0f;
+
+                goldTextGO.GetComponent<TMP_Text>().text = gold.ToString();
+                if (gold >= wingold)
+
+                if (winText)
+                {
+                    winText.enabled = true;
+                    Time.timeScale = 0.0f;
+                }
             }
-        }
     }
 }

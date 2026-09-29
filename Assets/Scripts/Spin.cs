@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Spin : MonoBehaviour
 {
-    public float speed = 180.0f;
+    public float speed = -180.0f;
 
     void FixedUpdate()
     {
