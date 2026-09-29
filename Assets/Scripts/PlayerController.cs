@@ -1,9 +1,12 @@
-
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+
     public float speed = 20.0f;
+    public int gold = 0;
+    public TMP_Text winText;
     private Rigidbody2D rb2d;
     private Vector3 startingScale;
 
@@ -11,7 +14,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        startingScale = transform.localScale;
+	    startingScale = transform.localScale;
     }
 
     // Update is called once per frame
@@ -24,20 +27,38 @@ public class PlayerController : MonoBehaviour
 
         if (direction != Vector2.zero)
             direction.Normalize();
-        //else    
-            //rb2d.linearVelocity *= 0.9f;
+        //else
+        //    rb2d.linearVelocity *= 0.9f;
 
         rb2d.AddForce(direction * speed);
 
         if (transform.localScale.x > startingScale.x)
-            transform.localScale -= new Vector3(Time.deltaTime, Time.deltaTime,Time.deltaTime);
-
+            transform.localScale -= new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime);
+        
         if (transform.localScale.x < startingScale.x)
             transform.localScale = startingScale;
+	
     }
 
-    void OnCollisionEnter2D(Collision2D _collision)
+    void OnCollisionEnter2D(Collision2D _collision) {
+    	transform.localScale = startingScale * 1.2f;
+    }
+
+    public void AddGold(int _amount)
     {
-        transform.localScale = startingScale * 2.0f;
+        gold += _amount;
+
+        GameObject goldTextGO = GameObject.Find("Gold Text");
+
+        if (goldTextGO)
+        {
+            goldTextGO.GetComponent<TMP_Text>().text = gold.ToString();
+
+            if (winText)
+            {
+                winText.enabled = true;
+                Time.timeScale = 0.0f;
+            }
+        }
     }
 }
