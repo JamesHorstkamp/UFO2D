@@ -2,29 +2,30 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Rendering;
 using System;
+using UnityEngine.SocialPlatforms.Impl;
 public class Timer : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI timerText;
-    [SerializeField] float remainingTime;
+    [SerializeField] TextMeshProUGUI winText;
+    [SerializeField] float maxScore;
+    int score = 0;
+
 
     void Update()
     {
-        if (remainingTime > 0)
+        if (maxScore > 0)
         { 
-            remainingTime -= Time.deltaTime;
-        }
-        else if (remainingTime < 0)
-        {
-            remainingTime = 0;
-        }
-        int minutes = Mathf.FloorToInt( remainingTime / 60);
-        int seconds = Mathf.FloorToInt(remainingTime % 60);
-        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            maxScore -= Time.deltaTime;
 
-        while (remainingTime < -1)
+            
+        }
+        else if (maxScore < 0)
         {
-            timerText.color = Color.red;
-            timerText.color = Color.black;
-        } 
+            maxScore = 0;
+        }
+
+        int score = Mathf.RoundToInt(maxScore);
+
+        winText.text = string.Format("CONGRADULATIONS, YOU WON!!! YOUR SCORE IS {0}", score);
+
     }
 }
